@@ -23,11 +23,11 @@ SPAWN_KAZDYCH_X = 2
 pg.time.set_timer(SPAWN_ENEMY_EVENT, SPAWN_KAZDYCH_X * 1000)
 
 GAME_OVER_EVENT = pg.USEREVENT + 2
-GAME_OVER_X = 5
+GAME_OVER_X = 20
 pg.time.set_timer(GAME_OVER_EVENT, GAME_OVER_X * 1000)
 
 ULTIMATE_CHARGE_EVENT = pg.USEREVENT + 3
-ULTIMATE_CHARGE_SEC = 3
+ULTIMATE_CHARGE_SEC = 5
 pg.time.set_timer(ULTIMATE_CHARGE_EVENT, ULTIMATE_CHARGE_SEC * 1000)
 
 
@@ -186,6 +186,17 @@ while running:
             enemy = enemy_type(pos_x, pos_y, "sprites/enemy.png", 2)
             enemy_group.add(enemy)
             enemy_count += 1
+
+            pg.time.set_timer(ULTIMATE_CHARGE_EVENT, ULTIMATE_CHARGE_SEC * 1000)
+
+        if event.type == pg.KEYDOWN and event.key == pg.K_u:
+            pocet_enemy = len(enemy_group)
+            player.skore += 1
+            enemy_group.empty()
+            pg.time.set_timer(ULTIMATE_CHARGE_EVENT, ULTIMATE_CHARGE_SEC * 1000)
+
+        if event.type == ULTIMATE_CHARGE_EVENT:
+            can_use_u = True
 
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_SPACE:
